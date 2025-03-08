@@ -1,7 +1,7 @@
 package dev.jake.westward.services;
 
-import dev.jake.westward.models.Adventurer;
-import dev.jake.westward.models.AdventurerClass;
+import dev.jake.westward.models.adventurer.Adventurer;
+import dev.jake.westward.models.adventurer.AdventurerClass;
 import dev.jake.westward.repositories.AdventurerRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

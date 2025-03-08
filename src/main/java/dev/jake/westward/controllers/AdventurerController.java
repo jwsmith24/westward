@@ -1,10 +1,8 @@
 package dev.jake.westward.controllers;
 
-import dev.jake.westward.models.Adventurer;
+import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.services.AdventurerService;
-import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/adventurer")
+@RequestMapping("/api/adventurers")
 public class AdventurerController {
     private final AdventurerService service;
 
@@ -54,8 +52,9 @@ public class AdventurerController {
     }
 
     @GetMapping
-    public List<Adventurer> getAllAdventurers() {
-        return service.getAllAdventurers();
+    public ResponseEntity<List<Adventurer>> getAllAdventurers() {
+        List<Adventurer> adventurers = service.getAllAdventurers();
+        return ResponseEntity.ok().body(adventurers);
     }
 
     @DeleteMapping
