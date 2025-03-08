@@ -1,6 +1,8 @@
 package dev.jake.westward.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,14 +14,15 @@ public class Adventurer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String adventurerClass;
+    @Enumerated(EnumType.STRING)
+    private AdventurerClass adventurerClass;
     private int level;
 
     public Adventurer() {
 
     }
 
-    public Adventurer(String name, String adventurerClass) {
+    public Adventurer(String name, AdventurerClass adventurerClass) {
         this.name = name;
         this.adventurerClass = adventurerClass;
         this.level = 1;
@@ -28,7 +31,7 @@ public class Adventurer {
 
     public long getId() {return id;}
     public String getName() {return name;}
-    public String getAdventurerClass() {return adventurerClass;}
+    public AdventurerClass getAdventurerClass() {return adventurerClass;}
     public int getLevel() {return level;}
 
 
