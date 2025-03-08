@@ -2,6 +2,7 @@ package dev.jake.westward.controllers;
 
 import dev.jake.westward.models.Adventurer;
 import dev.jake.westward.services.AdventurerService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,11 @@ public class AdventurerController {
     @PostMapping
     public Adventurer createAdventurer(@RequestBody Adventurer adventurer) {
         return service.createAdventurer(adventurer.getName(), adventurer.getAdventurerClass());
+    }
+
+    @GetMapping
+    public List<Adventurer> getAllAdventurers() {
+        return service.getAllAdventurers();
     }
 
 
