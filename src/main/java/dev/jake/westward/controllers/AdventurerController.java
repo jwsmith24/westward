@@ -43,7 +43,7 @@ public class AdventurerController {
     public Adventurer createAdventurer(@RequestBody Adventurer adventurer) {
 
         try {
-            return service.createAdventurer(adventurer.getName(),
+            return service.createAdventurer(adventurer.getAdventurerName(),
                     adventurer.getAdventurerClass());
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

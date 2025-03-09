@@ -8,7 +8,7 @@ public class Adventurer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
+    private String adventurerName;
     @Enumerated(EnumType.STRING)
     private AdventurerClass adventurerClass;
     private int level;
@@ -21,8 +21,8 @@ public class Adventurer {
 
     }
 
-    public Adventurer(String name, AdventurerClass adventurerClass) {
-        this.name = name;
+    public Adventurer(String adventurerName, AdventurerClass adventurerClass) {
+        this.adventurerName = adventurerName;
         this.adventurerClass = adventurerClass;
         this.level = 1;
         this.experience = 0;
@@ -31,7 +31,7 @@ public class Adventurer {
 
 
     public long getId() {return id;}
-    public String getName() {return name;}
+    public String getAdventurerName() {return adventurerName;}
     public AdventurerClass getAdventurerClass() {return adventurerClass;}
     public int getLevel() {return level;}
     public int getExperience() {return experience;}
