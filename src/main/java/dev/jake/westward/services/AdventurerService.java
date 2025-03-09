@@ -2,8 +2,11 @@ package dev.jake.westward.services;
 
 import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.models.adventurer.AdventurerClass;
+import dev.jake.westward.models.adventurer.Stats;
 import dev.jake.westward.repositories.AdventurerRepository;
 import java.util.List;
+
+import dev.jake.westward.repositories.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,11 +14,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AdventurerService {
-    private final AdventurerRepository repository;
+    private final AdventurerRepository adventurerRepository;
 
     @Autowired
-    public AdventurerService (AdventurerRepository repository) {
-        this.repository = repository;
+    public AdventurerService (AdventurerRepository adventurerRepository) {
+        this.adventurerRepository = adventurerRepository;
     }
 
     public Adventurer createAdventurer(String name, AdventurerClass adventurerClass) {
@@ -25,22 +28,26 @@ public class AdventurerService {
         }
 
         Adventurer adventurer = new Adventurer(name.trim(), adventurerClass);
-        return repository.save(adventurer);
+        Stats stats = new Stats();
+        adventurer.setStats(stats);
+
+
+        return adventurerRepository.save(adventurer);
     }
 
     public List<Adventurer> getAllAdventurers() {
-        return repository.findAll();
+        return adventurerRepository.findAll();
     }
 
     public void deleteAllAdventurers() {
-        repository.deleteAll();
+        adventurerRepository.deleteAll();
     }
 
     public void deleteAdventurerById(Long id) {
-        if (!repository.existsById(id)) {
+        if (!adventurerRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Adventurer with ID:" + id +
                     "not found.");
         }
-        repository.deleteById(id);
+        adventurerRepository.deleteById(id);
     }
 }

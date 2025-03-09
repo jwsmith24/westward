@@ -1,11 +1,6 @@
 package dev.jake.westward.models.adventurer;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Adventurer {
@@ -19,6 +14,9 @@ public class Adventurer {
     private int level;
     private int experience;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "stats_id", referencedColumnName = "id", nullable = false)
+    private Stats stats;
     public Adventurer() {
 
     }
@@ -28,6 +26,7 @@ public class Adventurer {
         this.adventurerClass = adventurerClass;
         this.level = 1;
         this.experience = 0;
+        this.stats = new Stats();
     }
 
 
@@ -36,6 +35,9 @@ public class Adventurer {
     public AdventurerClass getAdventurerClass() {return adventurerClass;}
     public int getLevel() {return level;}
     public int getExperience() {return experience;}
+    public Stats getStats() {return stats;}
+
+    public void setStats(Stats stats) {this.stats = stats;}
 
 
 
