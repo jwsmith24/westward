@@ -1,7 +1,12 @@
 package dev.jake.westward.models.adventurer;
 
+import dev.jake.westward.dto.StatsDTO;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 public class Stats {
     @Id
@@ -24,72 +29,34 @@ public class Stats {
 
     private int armor;
 
+    private static final int BASE_HP = 10;
+    private static final int BASE_MP = 5;
+    private static final int BASE_ARMOR = 5;
+
 
     public Stats() {
 
-        this.strength = 0;
-        this.dexterity = 0;
-        this.constitution = 0;
-        this.intelligence = 0;
-        this.wisdom = 0;
-        this.charisma = 0;
+    }
 
+    public Stats(StatsDTO stats) {
+        this.strength = stats.getStrength();
+        this.dexterity = stats.getDexterity();
+        this.constitution = stats.getConstitution();
+        this.intelligence = stats.getIntelligence();
+        this.wisdom = stats.getWisdom();
+        this.charisma = stats.getCharisma();
 
-        this.maxHealth = 0;
-        this.currentHealth = 0;
-        this.maxMana = 0;
-        this.currentMana = 0;
-        this.armor = 0;
+        // set derived stats
+        int maxHP = this.constitution + BASE_HP;
+        this.maxHealth = maxHP;
+        this.currentHealth = maxHP;
 
+        int maxMana = this.intelligence + BASE_MP;
+        this.maxMana = maxMana;
+        this.currentMana = maxMana;
+
+        this.armor = BASE_ARMOR;
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
-    }
-
-    public int getConstitution() {
-        return constitution;
-    }
-
-    public int getIntelligence() {
-        return intelligence;
-    }
-
-    public int getWisdom() {
-        return wisdom;
-    }
-
-    public int getCharisma() {
-        return charisma;
-    }
-
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    public int getCurrentHealth() {
-        return currentHealth;
-    }
-
-    public int getMaxMana() {
-        return maxMana;
-    }
-
-    public int getCurrentMana() {
-        return currentMana;
-    }
-
-    public int getArmor() {
-        return armor;
-    }
 }

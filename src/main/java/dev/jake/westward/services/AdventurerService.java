@@ -1,12 +1,10 @@
 package dev.jake.westward.services;
 
+import dev.jake.westward.dto.AdventurerRequest;
 import dev.jake.westward.models.adventurer.Adventurer;
-import dev.jake.westward.models.adventurer.AdventurerClass;
-import dev.jake.westward.models.adventurer.Stats;
 import dev.jake.westward.repositories.AdventurerRepository;
 import java.util.List;
 
-import dev.jake.westward.repositories.StatsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,21 +14,16 @@ import org.springframework.web.server.ResponseStatusException;
 public class AdventurerService {
     private final AdventurerRepository adventurerRepository;
 
+
     @Autowired
     public AdventurerService (AdventurerRepository adventurerRepository) {
         this.adventurerRepository = adventurerRepository;
     }
 
-    public Adventurer createAdventurer(String name, AdventurerClass adventurerClass) {
+    public Adventurer createAdventurer(AdventurerRequest request) {
 
-        if (name == null || name.trim().isBlank()) {
-            throw new IllegalArgumentException("Adventurer name cannot be empty.");
-        }
-
-        Adventurer adventurer = new Adventurer(name.trim(), adventurerClass);
-        Stats stats = new Stats();
-        adventurer.setStats(stats);
-
+        // map the data transfer object from the API request to an entity
+        Adventurer adventurer = new Adventurer(request);
 
         return adventurerRepository.save(adventurer);
     }

@@ -1,7 +1,12 @@
 package dev.jake.westward.models.adventurer;
 
+import dev.jake.westward.dto.AdventurerRequest;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 public class Adventurer {
 
@@ -17,28 +22,19 @@ public class Adventurer {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "stats_id", referencedColumnName = "id", nullable = false)
     private Stats stats;
-    public Adventurer() {
 
+    private static final int BASE_EXPERIENCE = 0;
+    private static final int BASE_LEVEL = 1;
+
+    public Adventurer() {}
+
+    public Adventurer(AdventurerRequest request) {
+        this.adventurerName = request.getAdventurerName();
+        this.adventurerClass = request.getAdventurerClass();
+        this.stats = new Stats(request.getStats());
+        this.level = BASE_LEVEL;
+        this.experience = BASE_EXPERIENCE;
     }
-
-    public Adventurer(String adventurerName, AdventurerClass adventurerClass) {
-        this.adventurerName = adventurerName;
-        this.adventurerClass = adventurerClass;
-        this.level = 1;
-        this.experience = 0;
-        this.stats = new Stats();
-    }
-
-
-    public long getId() {return id;}
-    public String getAdventurerName() {return adventurerName;}
-    public AdventurerClass getAdventurerClass() {return adventurerClass;}
-    public int getLevel() {return level;}
-    public int getExperience() {return experience;}
-    public Stats getStats() {return stats;}
-
-    public void setStats(Stats stats) {this.stats = stats;}
-
 
 
 }

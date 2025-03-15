@@ -1,7 +1,9 @@
 package dev.jake.westward.controllers;
 
+import dev.jake.westward.dto.AdventurerRequest;
 import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.services.AdventurerService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,11 +42,10 @@ public class AdventurerController {
     }
 
     @PostMapping
-    public Adventurer createAdventurer(@RequestBody Adventurer adventurer) {
+    public Adventurer createAdventurer(@Valid @RequestBody AdventurerRequest adventurerRequest) {
 
         try {
-            return service.createAdventurer(adventurer.getAdventurerName(),
-                    adventurer.getAdventurerClass());
+            return service.createAdventurer(adventurerRequest);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
