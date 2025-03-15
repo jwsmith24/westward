@@ -1,7 +1,15 @@
 package dev.jake.westward.models.adventurer;
 
 import dev.jake.westward.dto.AdventurerRequest;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +34,8 @@ public class Adventurer {
     private static final int BASE_EXPERIENCE = 0;
     private static final int BASE_LEVEL = 1;
 
-    public Adventurer() {}
+    public Adventurer() {
+    }
 
     public Adventurer(AdventurerRequest request) {
         this.adventurerName = request.getAdventurerName();

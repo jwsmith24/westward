@@ -27,13 +27,13 @@ public class AdventurerController {
      * makes dependencies explicit and ensures the object is always created with valid dependencies
      * and avoids having null values.
      * <p>
-     *     Spring boot will automatically inject the service dependency when the controller is
-     *     instantiated.
+     * Spring boot will automatically inject the service dependency when the controller is
+     * instantiated.
      * </p>
      *
      * <p>
-     *     It also makes the class structure more obvious, clearly showing the dependencies. Also
-     *     makes unit testing easier because we can manually pass a fake service/mock.
+     * It also makes the class structure more obvious, clearly showing the dependencies. Also makes
+     * unit testing easier because we can manually pass a fake service/mock.
      * </p>
      */
     @Autowired
