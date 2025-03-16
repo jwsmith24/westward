@@ -1,6 +1,8 @@
 package dev.jake.westward.models.adventurer;
 
 import dev.jake.westward.dto.StatsDTO;
+import dev.jake.westward.models.adventurer.bonuses.StatBonusStrategy;
+import dev.jake.westward.models.adventurer.bonuses.StatBonusStrategyFactory;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,17 +39,22 @@ public class Stats {
     private static final int BASE_ARMOR = 5;
 
 
+
     public Stats() {
 
     }
 
-    public Stats(StatsDTO stats) {
+    public Stats(StatsDTO stats, AdventurerClass adventurerClass) {
         this.strength = stats.getStrength();
         this.dexterity = stats.getDexterity();
         this.constitution = stats.getConstitution();
         this.intelligence = stats.getIntelligence();
         this.wisdom = stats.getWisdom();
         this.charisma = stats.getCharisma();
+
+        // use a strategy pattern to apply class bonuses
+        StatBonusStrategy bonusStrategy = StatBonusStrategyFactory.getStrategy(adventurerClass);
+        bonusStrategy.applyBonus(this);
 
         // set derived stats
         int maxHP = this.constitution + BASE_HP;
@@ -60,6 +67,8 @@ public class Stats {
 
         this.armor = BASE_ARMOR;
     }
+
+
 
 
 }

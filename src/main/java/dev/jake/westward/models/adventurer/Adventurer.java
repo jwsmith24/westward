@@ -40,7 +40,8 @@ public class Adventurer {
     public Adventurer(AdventurerRequest request) {
         this.adventurerName = request.getAdventurerName();
         this.adventurerClass = request.getAdventurerClass();
-        this.stats = new Stats(request.getStats());
+
+        this.stats = new Stats(request.getStats(), this.adventurerClass);
         this.level = BASE_LEVEL;
         this.experience = BASE_EXPERIENCE;
     }

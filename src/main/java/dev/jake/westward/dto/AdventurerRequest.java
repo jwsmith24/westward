@@ -4,10 +4,12 @@ import dev.jake.westward.models.adventurer.AdventurerClass;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Data Transfer Object for request validation.
  */
+@NoArgsConstructor
 @Getter
 public class AdventurerRequest {
 
