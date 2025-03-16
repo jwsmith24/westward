@@ -18,7 +18,7 @@ public class AdventurerDTO {
     private String adventurerName;
 
     @NotNull(message = "Adventurer class is required.")
-    private AdventurerClass adventurerClass;
+    private String adventurerClass;
 
     @NotNull(message = "Stats are required.")
     private StatsDTO stats;

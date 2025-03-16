@@ -2,6 +2,7 @@ package dev.jake.westward.dto.util;
 
 import dev.jake.westward.dto.AdventurerDTO;
 import dev.jake.westward.models.adventurer.Adventurer;
+import dev.jake.westward.models.adventurer.AdventurerClass;
 
 public class AdventurerMapper {
     private static final int BASE_EXPERIENCE = 0;
@@ -12,7 +13,7 @@ public class AdventurerMapper {
         Adventurer adventurer = new Adventurer();
 
         adventurer.setAdventurerName(dto.getAdventurerName());
-        adventurer.setAdventurerClass(dto.getAdventurerClass());
+        adventurer.setAdventurerClass(AdventurerClass.fromString(dto.getAdventurerClass()));
 
         if (dto.getLevel() != null && dto.getLevel() > 0) {
             adventurer.setLevel(dto.getLevel());
@@ -34,9 +35,9 @@ public class AdventurerMapper {
     // Convert Entity to DTO
     public static AdventurerDTO toDto(Adventurer entity) {
         AdventurerDTO dto = new AdventurerDTO();
-
+        dto.setId(entity.getId());
         dto.setAdventurerName(entity.getAdventurerName());
-        dto.setAdventurerClass(entity.getAdventurerClass());
+        dto.setAdventurerClass(entity.getAdventurerClass().toString());
         dto.setLevel(entity.getLevel());
         dto.setExperience(entity.getExperience());
 

@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +41,13 @@ public class QuestController {
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+    }
+
+    // Delete all quests
+    @DeleteMapping
+    public ResponseEntity<String> deleteAllQuests() {
+        questService.deleteAllQuests();
+        return ResponseEntity.ok().body("All quests have been deleted");
     }
 
 

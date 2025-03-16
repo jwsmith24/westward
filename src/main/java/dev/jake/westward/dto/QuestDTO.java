@@ -21,7 +21,7 @@ public class QuestDTO {
     private String description;
 
     @NotNull(message = "Quest must have a status.")
-    private Status status;
+    private String status;
 
 
     private List<Objective> objectives;
