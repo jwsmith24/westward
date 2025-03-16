@@ -39,7 +39,6 @@ public class Stats {
     private static final int BASE_ARMOR = 5;
 
 
-
     public Stats() {
 
     }
@@ -56,6 +55,13 @@ public class Stats {
         StatBonusStrategy bonusStrategy = StatBonusStrategyFactory.getStrategy(adventurerClass);
         bonusStrategy.applyBonus(this);
 
+        updateDerivedStats();
+    }
+
+    /**
+     * Refresh derived stats after a change to base stats.
+     */
+    public void updateDerivedStats() {
         // set derived stats
         int maxHP = this.constitution + BASE_HP;
         this.maxHealth = maxHP;
@@ -67,8 +73,6 @@ public class Stats {
 
         this.armor = BASE_ARMOR;
     }
-
-
 
 
 }

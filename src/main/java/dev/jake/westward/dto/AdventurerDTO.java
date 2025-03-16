@@ -4,14 +4,15 @@ import dev.jake.westward.models.adventurer.AdventurerClass;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Data Transfer Object for request validation.
  */
-@NoArgsConstructor
 @Getter
-public class AdventurerRequest {
+@Setter
+public class AdventurerDTO {
+    private Long id;
 
     @NotEmpty(message = "Adventurer name cannot be empty.")
     private String adventurerName;
@@ -21,6 +22,9 @@ public class AdventurerRequest {
 
     @NotNull(message = "Stats are required.")
     private StatsDTO stats;
+
+    private Integer level;
+    private Integer experience;
 
 
 }

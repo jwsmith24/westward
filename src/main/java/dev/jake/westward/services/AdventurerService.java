@@ -1,9 +1,11 @@
 package dev.jake.westward.services;
 
-import dev.jake.westward.dto.AdventurerRequest;
+import dev.jake.westward.dto.AdventurerDTO;
+import dev.jake.westward.dto.util.AdventurerMapper;
 import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.repositories.AdventurerRepository;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -19,16 +21,20 @@ public class AdventurerService {
         this.adventurerRepository = adventurerRepository;
     }
 
-    public Adventurer createAdventurer(AdventurerRequest request) {
+    public AdventurerDTO createAdventurer(AdventurerDTO dto) {
 
         // map the data transfer object from the API request to an entity
-        Adventurer adventurer = new Adventurer(request);
+        Adventurer adventurer = AdventurerMapper.toEntity(dto);
+        Adventurer savedAdventurer = adventurerRepository.save(adventurer);
 
-        return adventurerRepository.save(adventurer);
+        return AdventurerMapper.toDto(savedAdventurer);
     }
 
-    public List<Adventurer> getAllAdventurers() {
-        return adventurerRepository.findAll();
+    public List<AdventurerDTO> getAllAdventurers() {
+        return adventurerRepository.findAll()
+                .stream()
+                .map(AdventurerMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public void deleteAllAdventurers() {

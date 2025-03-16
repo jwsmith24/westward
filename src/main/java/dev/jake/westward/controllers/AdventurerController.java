@@ -1,7 +1,6 @@
 package dev.jake.westward.controllers;
 
-import dev.jake.westward.dto.AdventurerRequest;
-import dev.jake.westward.models.adventurer.Adventurer;
+import dev.jake.westward.dto.AdventurerDTO;
 import dev.jake.westward.services.AdventurerService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -42,10 +41,11 @@ public class AdventurerController {
     }
 
     @PostMapping
-    public Adventurer createAdventurer(@Valid @RequestBody AdventurerRequest adventurerRequest) {
+    public ResponseEntity<AdventurerDTO> createAdventurer(@Valid @RequestBody AdventurerDTO adventurerRequest) {
 
         try {
-            return service.createAdventurer(adventurerRequest);
+            AdventurerDTO dto = service.createAdventurer(adventurerRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
@@ -53,8 +53,8 @@ public class AdventurerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Adventurer>> getAllAdventurers() {
-        List<Adventurer> adventurers = service.getAllAdventurers();
+    public ResponseEntity<List<AdventurerDTO>> getAllAdventurers() {
+        List<AdventurerDTO> adventurers = service.getAllAdventurers();
         return ResponseEntity.ok().body(adventurers);
     }
 
