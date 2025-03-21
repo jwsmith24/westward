@@ -1,4 +1,4 @@
-package dev.jake.westward.models.adventurer.bonuses;
+package dev.jake.westward.dto.util;
 
 import dev.jake.westward.models.adventurer.Stats;
 

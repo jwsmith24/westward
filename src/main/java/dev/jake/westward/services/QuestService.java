@@ -1,6 +1,7 @@
 package dev.jake.westward.services;
 
-import dev.jake.westward.dto.QuestDTO;
+import dev.jake.westward.dto.QuestRequest;
+import dev.jake.westward.dto.QuestResponse;
 import dev.jake.westward.dto.util.QuestMapper;
 import dev.jake.westward.models.quests.Quest;
 import dev.jake.westward.repositories.QuestRepository;
@@ -15,27 +16,26 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class QuestService {
     private final QuestRepository questRepository;
+    private final QuestMapper mapper;
 
     @Autowired
-    public QuestService(QuestRepository questRepository) {
+    public QuestService(QuestRepository questRepository, QuestMapper mapper) {
         this.questRepository = questRepository;
+        this.mapper = mapper;
     }
 
 
-    public List<QuestDTO> getQuests() {
-        return questRepository.findAll()
-                .stream()
-                .map(QuestMapper::toDto)
-                .collect(Collectors.toList());
+    public List<QuestResponse> getQuests() {
+        return mapper.toResponseList(questRepository.findAll());
     }
 
 
-    public QuestDTO addQuest(QuestDTO quest) {
+    public QuestResponse addQuest(QuestRequest quest) {
 
-        Quest newQuest = QuestMapper.toEntity(quest);
+        Quest newQuest = mapper.toEntity(quest);
         Quest savedQuest = questRepository.save(newQuest);
 
-        return QuestMapper.toDto(savedQuest);
+        return mapper.toResponse(savedQuest);
     }
 
     public void deleteAllQuests() {

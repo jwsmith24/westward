@@ -1,45 +1,25 @@
 package dev.jake.westward.dto.util;
 
-import dev.jake.westward.dto.StatsDTO;
+import dev.jake.westward.dto.StatsRequest;
+import dev.jake.westward.dto.StatsResponse;
 import dev.jake.westward.models.adventurer.Stats;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-public class StatsMapper {
 
-    // DTO -> Entity
-    public static Stats toEntity(StatsDTO statsDTO) {
-        Stats stats = new Stats();
+@Mapper(componentModel = "spring")
+public interface StatsMapper {
 
-        stats.setStrength(statsDTO.getStrength());
-        stats.setDexterity(statsDTO.getDexterity());
-        stats.setConstitution(statsDTO.getConstitution());
-        stats.setIntelligence(statsDTO.getIntelligence());
-        stats.setWisdom(statsDTO.getWisdom());
-        stats.setCharisma(statsDTO.getCharisma());
+    Stats toEntity(StatsRequest stats);
 
+    StatsResponse toResponse(Stats stats);
+
+
+    @AfterMapping
+    default void updateDerivedFields(@MappingTarget Stats stats) {
         stats.updateDerivedStats();
-
-        return stats;
     }
 
-    // Entity -> DTO
-
-    public static StatsDTO toDTO(Stats stats) {
-        StatsDTO statsDTO = new StatsDTO();
-
-        statsDTO.setStrength(stats.getStrength());
-        statsDTO.setDexterity(stats.getDexterity());
-        statsDTO.setConstitution(stats.getConstitution());
-        statsDTO.setIntelligence(stats.getIntelligence());
-        statsDTO.setWisdom(stats.getWisdom());
-        statsDTO.setCharisma(stats.getCharisma());
-
-        statsDTO.setMaxHealth(stats.getMaxHealth());
-        statsDTO.setMaxMana(stats.getMaxMana());
-        statsDTO.setCurrentHealth(stats.getCurrentHealth());
-        statsDTO.setCurrentMana(stats.getCurrentMana());
-        statsDTO.setArmor(stats.getArmor());
-
-
-        return statsDTO;
-    }
 }

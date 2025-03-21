@@ -1,6 +1,7 @@
 package dev.jake.westward.controllers;
 
-import dev.jake.westward.dto.QuestDTO;
+import dev.jake.westward.dto.QuestRequest;
+import dev.jake.westward.dto.QuestResponse;
 import dev.jake.westward.services.QuestService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -26,17 +27,17 @@ public class QuestController {
 
     // Get all quests
     @GetMapping
-    public ResponseEntity<List<QuestDTO>> getQuests() {
-        List<QuestDTO> quests = questService.getQuests();
+    public ResponseEntity<List<QuestResponse>> getQuests() {
+        List<QuestResponse> quests = questService.getQuests();
         return ResponseEntity.ok().body(quests);
 
     }
 
     // Create a new quest
     @PostMapping
-    public ResponseEntity<QuestDTO> createQuest(@Valid @RequestBody QuestDTO questDTO) {
+    public ResponseEntity<QuestResponse> createQuest(@Valid @RequestBody QuestRequest questDTO) {
         try {
-            QuestDTO dto = questService.addQuest(questDTO);
+            QuestResponse dto = questService.addQuest(questDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

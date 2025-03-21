@@ -1,18 +1,17 @@
 package dev.jake.westward.dto;
 
-import dev.jake.westward.models.adventurer.AdventurerClass;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Data Transfer Object for request validation.
+ * Adventurer DTO for incoming requests.
  */
 @Getter
 @Setter
-public class AdventurerDTO {
-    private Long id;
+public class AdventurerRequest {
+
 
     @NotEmpty(message = "Adventurer name cannot be empty.")
     private String adventurerName;
@@ -21,10 +20,8 @@ public class AdventurerDTO {
     private String adventurerClass;
 
     @NotNull(message = "Stats are required.")
-    private StatsDTO stats;
+    private StatsRequest stats;
 
-    private Integer level;
-    private Integer experience;
 
 
 }

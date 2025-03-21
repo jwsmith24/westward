@@ -1,19 +1,14 @@
 package dev.jake.westward.dto;
 
-
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * Data Transfer Object for Adventurer Stats.
- */
-@Setter
 @Getter
-public class StatsDTO {
-
+@Setter
+public class StatsRequest {
     @NotNull
     @Min(value = 0, message = "Strength must be at least 0")
     @Max(value = 17, message = "Strength cannot exceed 17")
@@ -43,13 +38,4 @@ public class StatsDTO {
     @Min(value = 0, message = "Charisma must be at least 0")
     @Max(value = 17, message = "Charisma cannot exceed 17")
     private int charisma;
-
-    // Derived stats -  don't really need them for incoming requests
-    private int maxHealth;
-    private int currentHealth;
-    private int maxMana;
-    private int currentMana;
-    private int armor;
-
 }
-

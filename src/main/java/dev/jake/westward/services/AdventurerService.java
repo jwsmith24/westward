@@ -1,11 +1,12 @@
 package dev.jake.westward.services;
 
-import dev.jake.westward.dto.AdventurerDTO;
+import dev.jake.westward.dto.AdventurerRequest;
+import dev.jake.westward.dto.AdventurerResponse;
 import dev.jake.westward.dto.util.AdventurerMapper;
+import dev.jake.westward.dto.util.StatsBuilder;
 import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.repositories.AdventurerRepository;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,27 +15,30 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class AdventurerService {
     private final AdventurerRepository adventurerRepository;
+    private final AdventurerMapper mapper;
+    private final StatsBuilder statsBuilder;
 
 
     @Autowired
-    public AdventurerService(AdventurerRepository adventurerRepository) {
+    public AdventurerService(AdventurerRepository adventurerRepository, AdventurerMapper mapper, StatsBuilder statsBuilder) {
         this.adventurerRepository = adventurerRepository;
+        this.mapper = mapper;
+        this.statsBuilder = statsBuilder;
     }
 
-    public AdventurerDTO createAdventurer(AdventurerDTO dto) {
+    public AdventurerResponse createAdventurer(AdventurerRequest request) {
 
         // map the data transfer object from the API request to an entity
-        Adventurer adventurer = AdventurerMapper.toEntity(dto);
+        Adventurer adventurer = mapper.toEntity(request);
+        adventurer.setStats(statsBuilder.buildWithBonuses(request.getStats(),
+                request.getAdventurerClass()));
         Adventurer savedAdventurer = adventurerRepository.save(adventurer);
 
-        return AdventurerMapper.toDto(savedAdventurer);
+        return mapper.toResponse(savedAdventurer);
     }
 
-    public List<AdventurerDTO> getAllAdventurers() {
-        return adventurerRepository.findAll()
-                .stream()
-                .map(AdventurerMapper::toDto)
-                .collect(Collectors.toList());
+    public List<AdventurerResponse> getAllAdventurers() {
+        return mapper.toResponseList(adventurerRepository.findAll());
     }
 
     public void deleteAllAdventurers() {

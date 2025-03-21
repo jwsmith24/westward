@@ -1,48 +1,31 @@
 package dev.jake.westward.dto.util;
 
-import dev.jake.westward.dto.AdventurerDTO;
+import dev.jake.westward.dto.AdventurerRequest;
+import dev.jake.westward.dto.AdventurerResponse;
 import dev.jake.westward.models.adventurer.Adventurer;
 import dev.jake.westward.models.adventurer.AdventurerClass;
+import java.util.List;
+import org.mapstruct.*;
 
-public class AdventurerMapper {
-    private static final int BASE_EXPERIENCE = 0;
-    private static final int BASE_LEVEL = 1;
+@Mapper(componentModel = "spring", uses = {StatsMapper.class})
+public interface AdventurerMapper {
 
-    // Convert DTO to Entity
-    public static Adventurer toEntity(AdventurerDTO dto) {
-        Adventurer adventurer = new Adventurer();
+    @Mapping(source = "adventurerClass", target = "adventurerClass", qualifiedByName = "stringToClass")
+    Adventurer toEntity(AdventurerRequest request);
 
-        adventurer.setAdventurerName(dto.getAdventurerName());
-        adventurer.setAdventurerClass(AdventurerClass.fromString(dto.getAdventurerClass()));
+    @Mapping(source = "adventurerClass", target = "adventurerClass", qualifiedByName = "classToString")
+    AdventurerResponse toResponse(Adventurer adventurer);
 
-        if (dto.getLevel() != null && dto.getLevel() > 0) {
-            adventurer.setLevel(dto.getLevel());
-        } else {
-            adventurer.setLevel(BASE_LEVEL);
-        }
+    List<AdventurerResponse> toResponseList(List<Adventurer> adventurers);
 
-        if (dto.getExperience() != null && dto.getExperience() > 0) {
-            adventurer.setExperience(dto.getExperience());
-        } else {
-            adventurer.setExperience(BASE_EXPERIENCE);
-        }
-
-        adventurer.setStats(StatsMapper.toEntity(dto.getStats()));
-
-        return adventurer;
+    @Named("classToString")
+    static String mapClassToString(AdventurerClass ac) {
+        System.out.print(ac);
+        return ac != null ? ac.toString() : null;
     }
 
-    // Convert Entity to DTO
-    public static AdventurerDTO toDto(Adventurer entity) {
-        AdventurerDTO dto = new AdventurerDTO();
-        dto.setId(entity.getId());
-        dto.setAdventurerName(entity.getAdventurerName());
-        dto.setAdventurerClass(entity.getAdventurerClass().toString());
-        dto.setLevel(entity.getLevel());
-        dto.setExperience(entity.getExperience());
-
-        dto.setStats(StatsMapper.toDTO(entity.getStats()));
-
-        return dto;
+    @Named("stringToClass")
+    static AdventurerClass toClassFromString(String ac) {
+        return AdventurerClass.fromString(ac);
     }
 }
